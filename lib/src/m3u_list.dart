@@ -84,12 +84,15 @@ class M3uList {
 
   void _parseLine(String line) {
     if (_lastItem != null) {
-      _items.add(M3uItem.fromItem(_lastItem!, line));
-      _lastItem = null;
+      if(!line.startsWith(_ignorePrefix)) {
+        _items.add(M3uItem.fromItem(_lastItem!, line));
+
+        _lastItem = null;
+      } 
       return;
     }
 
-    if (!line.startsWith(_itemPrefix) || line.startsWith(_ignorePrefix)) {
+    if (!line.startsWith(_itemPrefix)) {
       return;
     }
 
